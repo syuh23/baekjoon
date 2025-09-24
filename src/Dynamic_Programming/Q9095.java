@@ -1,33 +1,29 @@
 package Dynamic_Programming;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Q9095 {
 
-    private static ArrayList<List<Integer>> findNumCombinations = new ArrayList<>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        sc.close();
+        int questionNumber = Integer.parseInt(br.readLine());
+        int[] total = new int[11];
 
-        // 0 < N < 11 (정수)
-        firstThree(n);
+        total[1] = 1;
+        total[2] = 2;
+        total[3] = 4;
+
+        for (int i = 4; i < total.length; i++) {
+            total[i] = total[i - 1] + total[i - 2] + total[i - 3];
+        }
+
+        for (int i = 0; i < questionNumber; i++) {
+            int n = Integer.parseInt(br.readLine());
+            System.out.println(total[n]);
+        }
 
     }
-
-    private static void firstThree(int n) {
-        int repeat = 0;
-        int start = n - 3;
-
-
-
-    }
-
-    private static int minusThree(int start) {
-        return start - 3;
-    }
-
 }
