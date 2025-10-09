@@ -12,26 +12,32 @@ public class Q11066 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         int T = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < T; i++) {
+        for (int tc = 0; tc < T; tc++) {
             st = new StringTokenizer(br.readLine());
             int N = Integer.parseInt(st.nextToken());
 
             int[] numbers = new int [N + 1];
+            int[] sum = new int[N + 1];
             int[][] dp = new int[N + 1][N + 1];
 
-            for (int j = 1; j <= N; j++) {
-                st = new StringTokenizer(br.readLine());
-                numbers[j] = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(br.readLine());
+            for (int i = 1; i <= N; i++) {
+                numbers[i] = Integer.parseInt(st.nextToken());
+                sum[i] = sum[i - 1] + numbers[i];
             }
 
-            int min = Integer.MAX_VALUE - 1;
-            for (int j = 1; j <= N; j++) {
-                for (int k = j + 1; k <= N; k++) {
-                    min = Math.min(min, numbers[j] + numbers[k]);
+            for (int gap = 1; gap <= N; gap++) {
+                for (int from = 1; from + gap <= N; from++) {
+                    int to = from + gap;
+                    dp[from][to] = Integer.MAX_VALUE;
 
+                    for (int middle = from; middle < to; middle++) {
+                        dp[from][to] = Math.min(dp[from][to], dp[from][middle] + dp[middle + 1][to] + sum[to] - sum[from - 1]);
+                    }
                 }
             }
 
+            System.out.println(dp[1][N]);
         }
     }
 }
